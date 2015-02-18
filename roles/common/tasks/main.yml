@@ -1,0 +1,109 @@
+
+- name: ensure networkmanager is deactivated
+  service: name=NetworkManager state=stopped enabled=no
+
+- name: ensure several packages are installed
+  yum: name={{ item }} state=latest
+  with_items:
+    - epel-release
+    - git
+    - zsh 
+    - git-core
+    - emacs-nox
+    - htop
+    - python-pip
+    - wget
+
+- group: name=admin state=present gid=7777
+    
+- user: name=gregf state=present uid=1000 shell=/usr/bin/zsh group=gregf groups=admin append=yes
+
+- authorized_key: user=gregf key="{{ lookup('file', '/home/gregf/.ssh/id_rsa.pub') }}"
+
+### ZSH
+
+- name: Clone oh-my-zsh repo
+  git: repo=https://github.com/robbyrussell/oh-my-zsh.git dest=/home/{{ user }}/.oh-my-zsh
+      
+- name: remove standard zshrc
+  file: path=/home/{{ user }}/.zshrc state=absent
+
+- name: Create conf folder in home directory
+  file: path=/home/{{ user }}/conf/ state=directory owner={{ user }}
+
+- name: deploy .zshrc
+  template: src=files/zshrc.in dest=/home/{{ user }}/conf/zshrc owner={{ user }}
+
+- name: symlink zshrc
+  file: path=/home/{{ user }}/.zshrc src=/home/{{ user }}/conf/zshrc state=link owner={{ user }}
+
+- name: Set zsh as default shell
+  user: name={{ user }} shell=/bin/zsh
+
+### END ZSH
+
+### NTP
+
+- name: be sure ntp is installed
+  yum: pkg=ntp state=installed
+  tags: ntp
+
+- name: be sure ntp is configured
+  template: src=ntp.conf.j2 dest=/etc/ntp.conf
+  notify:
+    - restart ntpd
+  tags: ntp
+
+- name: be sure ntpd is running and enabled
+  service: name=ntpd state=running enabled=yes
+  tags: ntp
+
+### END NTP
+
+### SUDOERS
+
+- lineinfile: dest=/etc/sudoers state=absent regexp="^%wheel"
+- lineinfile: dest=/etc/sudoers state=absent regexp="^gregf"
+
+- lineinfile: dest=/etc/sudoers state=present regexp='^%ADMIN ALL\=' line='%ADMIN ALL=(ALL) NOPASSWD:ALL' validate='visudo -cf %s'
+
+### END SUDOERS
+
+
+### SSHD 
+
+- name: sshd configuration file update
+  template: src=sshd_config.j2 dest=/etc/ssh/sshd_config backup=yes owner=0 group=0 mode=0644 validate='/usr/sbin/sshd -T -f %s'
+  notify:
+  - restart sshd
+
+### END SSHD
+
+
+### FIREWALLD (PUBLIC ZONE)
+
+- name: configure firewalld
+  service: name=firewalld state=started enabled=yes
+
+- firewalld: service=ssh permanent=true state=enabled
+- firewalld: service=http permanent=true state=enabled
+- firewalld: service=https permanent=true state=enabled
+- firewalld: port=8080/tcp permanent=true state=enabled # need to apply only to byrd, but applied generically for now
+
+- shell: /usr/bin/firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 0 -p tcp -m tcp --dport 22 -m recent --update --seconds 180 --hitcount 3 --rttl --name SSH --rsource -m comment --comment "SSH Brute-force protection" -j LOG --log-prefix "SSH_brute_force " 
+
+- shell: /usr/bin/firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 1 -p tcp -m tcp --dport 22 -m recent --update --seconds 180 --hitcount 3 --rttl --name SSH --rsource -m comment --comment "SSH Brute-force protection" -j DROP
+
+- shell: /usr/bin/firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 2 -p tcp -m tcp --dport 22 -m state --state NEW -m recent --set --name SSH --rsource -m comment --comment "SSH Brute-force protection" -j ACCEPT
+
+- service: name=firewalld state=restarted
+
+### END FIREWALLD
+
+#- name: send a message
+#  jabber: user=gregfelice@icloud.com password=secret to=gregfelice@icloud.com msg="Ansible task finished"
+
+
+
+
+
