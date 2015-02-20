@@ -2,4 +2,5 @@
 user: gregf
 zsh_theme: mortalscumbag
 
+ntpserver: 0.north-america.pool.ntp.org
 

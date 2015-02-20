@@ -82,28 +82,22 @@
 
 ### FIREWALLD (PUBLIC ZONE)
 
-- name: configure firewalld
+- name: ensure firewalld is started
   service: name=firewalld state=started enabled=yes
 
-- firewalld: service=ssh permanent=true state=enabled
-- firewalld: service=http permanent=true state=enabled
-- firewalld: service=https permanent=true state=enabled
-- firewalld: port=8080/tcp permanent=true state=enabled # need to apply only to byrd, but applied generically for now
+- name: configure firewall services / ports
+  firewalld: service=ssh permanent=true state=enabled
+  firewalld: service=http permanent=true state=enabled
+  firewalld: service=https permanent=true state=enabled
+  firewalld: port=8080/tcp permanent=true state=enabled # need to apply only to byrd, but applied generically for now
 
-- shell: /usr/bin/firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 0 -p tcp -m tcp --dport 22 -m recent --update --seconds 180 --hitcount 3 --rttl --name SSH --rsource -m comment --comment "SSH Brute-force protection" -j LOG --log-prefix "SSH_brute_force " 
+- name: configure ssh hitcount / ban directives
+  script: firewall.sh
 
-- shell: /usr/bin/firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 1 -p tcp -m tcp --dport 22 -m recent --update --seconds 180 --hitcount 3 --rttl --name SSH --rsource -m comment --comment "SSH Brute-force protection" -j DROP
-
-- shell: /usr/bin/firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT 2 -p tcp -m tcp --dport 22 -m state --state NEW -m recent --set --name SSH --rsource -m comment --comment "SSH Brute-force protection" -j ACCEPT
-
-- service: name=firewalld state=restarted
+- name: reload changes to firewalld
+  service: name=firewalld state=restarted
 
 ### END FIREWALLD
-
-#- name: send a message
-#  jabber: user=gregfelice@icloud.com password=secret to=gregfelice@icloud.com msg="Ansible task finished"
-
-
 
 
 
