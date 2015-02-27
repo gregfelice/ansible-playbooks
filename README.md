@@ -1,7 +1,10 @@
-
 A quick ansible proof of concept.
 
-To get this working:
+If you're just poking around, the most interesting file is here:
+
+https://github.com/gregfelice/marog/blob/master/roles/common/tasks/main.yml
+
+To get this all working:
 
 on your local machine:
 
