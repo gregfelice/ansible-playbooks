@@ -1,5 +1,16 @@
 
-# things to do.
+An ansible proof of concept.
 
-* sshd config
-* sudoers config
+To get this working:
+
+$ yum install ansible
+
+$ touch /etc/ansible/hosts
+
+Configure hosts file as per documentation
+
+$ ./run
+
+
+
+
