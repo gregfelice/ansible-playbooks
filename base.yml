@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: kvm-guests
 
   roles: 
     - common
