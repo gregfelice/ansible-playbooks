@@ -1,12 +1,28 @@
 
-# managed by ansible
+# put here by ansible
 
-# PasswordAuthentication no
+Port 22
 
-PermitRootLogin without-password
-AcceptEnv LANG LC_*
+PasswordAuthentication no
 ChallengeResponseAuthentication no
+PermitRootLogin without-password
+
+AcceptEnv LANG LC_*
+
 PrintMotd no
 Subsystem sftp /usr/libexec/openssh/sftp-server
 UsePAM yes
 X11Forwarding yes
+
+Banner /etc/issue
+
+UsePrivilegeSeparation yes
+
+Protocol 2
+
+LogLevel INFO
+
+TCPKeepAlive yes
+
+AllowUsers gregf deploy
+

@@ -2,23 +2,26 @@
 - name: ensure networkmanager is deactivated
   service: name=NetworkManager state=stopped enabled=no
 
-- name: ensure several packages are installed
-  yum: name={{ item }} state=latest
-  with_items:
-    - epel-release
-    - git
-    - zsh 
-    - git-core
-    - emacs-nox
-    - htop
-    - python-pip
-    - wget
+#- name: ensure several packages are installed
+#  yum: name={{ item }} state=latest
+#  with_items:
+#    - epel-release
+#    - git
+#    - zsh 
+#    - git-core
+#    - emacs-nox
+#    - htop
+#    - python-pip
+#    - wget
 
 - group: name=admin state=present gid=7777
     
 - user: name=gregf state=present uid=1000 shell=/usr/bin/zsh group=gregf groups=admin append=yes
 
 - authorized_key: user=gregf key="{{ lookup('file', '/home/gregf/.ssh/id_rsa.pub') }}"
+
+- name: custom etc/issue
+  template: src=issue.j2 dest=/etc/issue owner=root
 
 ### ZSH
 
@@ -90,6 +93,7 @@
   firewalld: service=http permanent=true state=enabled
   firewalld: service=https permanent=true state=enabled
   firewalld: port=8080/tcp permanent=true state=enabled # need to apply only to byrd, but applied generically for now
+  firewalld: port=8090/tcp permanent=true state=enabled # need to apply only to byrd, but applied generically for now
 
 - name: configure ssh hitcount / ban directives
   script: firewall.sh
