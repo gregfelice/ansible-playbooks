@@ -1,0 +1,4 @@
+
+# apply base role to stage population
+
+ansible-playbook -u ansible --sudo --ask-sudo-pass -s site.yml -f 4

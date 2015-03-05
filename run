@@ -1,3 +1,0 @@
-
-ansible-playbook -u gregf --sudo --ask-sudo-pass -s site.yml -f 4
-
