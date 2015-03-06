@@ -1,14 +1,15 @@
-   
-- user: name=gregf state=present uid=1000 shell=/usr/bin/zsh group=gregf groups=admin append=yes
 
+### basic users stuff 
+   
+- user: name=gregf state=present uid=1000 shell=/bin/bash group=gregf groups=admin append=yes
 - authorized_key: user=gregf key="{{ lookup('file', '/home/gregf/.ssh/id_rsa.pub') }}"
 
-### SUDOERS
+### sudoers
 
 - lineinfile: dest=/etc/sudoers state=absent regexp="^%wheel"
 - lineinfile: dest=/etc/sudoers state=absent regexp="^gregf"
 
-### FIREWALLD (PUBLIC ZONE)
+### firewalls
 
 - name: ensure firewalld is started
   service: name=firewalld state=started enabled=yes
@@ -17,6 +18,7 @@
   firewalld: service=ssh permanent=true state=enabled
   firewalld: service=http permanent=true state=enabled
   firewalld: service=https permanent=true state=enabled
+
   firewalld: port=8080/tcp permanent=true state=enabled # need to apply only to byrd, but applied generically for now
   firewalld: port=8090/tcp permanent=true state=enabled # need to apply only to byrd, but applied generically for now
 

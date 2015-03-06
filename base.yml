@@ -3,6 +3,6 @@
 
   roles: 
     - hardened
-    # - common
+    - common
 
 

@@ -1,4 +1,8 @@
 
 # apply base role to stage population
 
-ansible-playbook -i stage -u ansible --sudo -s base.yml
+ansible-playbook -i stage -u ansible --sudo -s base.yml 
+
+
+
+
