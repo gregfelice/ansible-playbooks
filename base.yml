@@ -2,5 +2,7 @@
 - hosts: base
 
   roles: 
-    - common
+    - hardened
+    # - common
+
 
