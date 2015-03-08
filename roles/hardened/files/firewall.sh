@@ -2,7 +2,7 @@
 
 DPORT=22
 SECONDS=180
-HITCOUNT=3
+HITCOUNT=5
 COMMENT="SSH Brute-force protection"
 LOG_PREFIX="SSH_brute_force "
 
