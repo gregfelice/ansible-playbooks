@@ -1,6 +1,9 @@
 
 ### basic users stuff 
 
+- name: disable that pesky selinux
+  selinux: state=disabled
+
 - group: name=gregf state=present gid=1000
    
 - user: name=gregf state=present uid=1000 shell=/bin/bash group=gregf groups=admin append=yes
@@ -24,8 +27,8 @@
 - firewalld: port=8080/tcp permanent=true state=enabled
 - firewalld: port=8090/tcp permanent=true state=enabled
 
-- name: configure ssh hitcount / ban directives
-  script: firewall.sh
+#- name: configure ssh hitcount / ban directives
+#  script: firewall.sh
 
 - name: reload changes to firewalld
   service: name=firewalld state=restarted

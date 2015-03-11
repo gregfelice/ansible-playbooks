@@ -2,7 +2,7 @@
 # apply bootstrap to new
 
 echo "RUN THIS ONCE, AND AUTHENTICATE WITH ROOT PASSWORD"
-ansible-playbook -i stage -u root -s new.yml --ask-pass
+ansible-playbook -i stage -u root -s new.yml --ask-pass -vvvv
 
 
 

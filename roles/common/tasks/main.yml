@@ -3,7 +3,7 @@
   service: name=NetworkManager state=stopped enabled=no
 
 - name: ensure several packages are installed
-  yum: name={{ item }} state=latest
+  yum: name={{ item }} state=latest update_cache=true
   with_items:
     - epel-release
     - git

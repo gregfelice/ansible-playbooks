@@ -2,7 +2,7 @@
 - hosts: base
 
   roles: 
+    - bootstrap
     - hardened
     - common
-
-
+    - backup-client
