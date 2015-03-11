@@ -4,15 +4,14 @@
 - name: disable that pesky selinux
   selinux: state=disabled
 
-- group: name=gregf state=present gid=1000
+- group: name={{user}} state=present gid=1000
    
-- user: name=gregf state=present uid=1000 shell=/bin/bash group=gregf groups=admin append=yes
-- authorized_key: user=gregf key="{{ lookup('file', '/home/gregf/.ssh/id_rsa.pub') }}"
+- user: name={{user}} state=present uid=1000 shell=/bin/bash group={{user}} groups=admin append=yes
+- authorized_key: user={{user}} key="{{ lookup('file', '/home/{{user}}/.ssh/id_rsa.pub') }}"
 
 ### sudoers
 
 - lineinfile: dest=/etc/sudoers state=absent regexp="^%wheel"
-- lineinfile: dest=/etc/sudoers state=absent regexp="^gregf"
 
 ### firewalls
 
@@ -26,9 +25,6 @@
 - firewalld: service=https permanent=true state=enabled
 - firewalld: port=8080/tcp permanent=true state=enabled
 - firewalld: port=8090/tcp permanent=true state=enabled
-
-#- name: configure ssh hitcount / ban directives
-#  script: firewall.sh
 
 - name: reload changes to firewalld
   service: name=firewalld state=restarted
