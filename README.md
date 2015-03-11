@@ -8,7 +8,7 @@ To get this all working:
 
 on your local machine:
 
-$ git clone https://github.com/gregfelice/marog.git
+$ git clone https://github.com/gregfelice/ansible-playbooks.git
 
 $ yum install ansible
 
