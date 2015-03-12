@@ -1,0 +1,6 @@
+
+
+- name: ensure postgres is running
+  command: /usr/bin/pg_ctl start -w -D /var/lib/pgsql/data 
+
+- postgresql_db: name=acme

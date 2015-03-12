@@ -1,0 +1,10 @@
+---
+- hosts: app-servers
+
+  roles: 
+    - bootstrap
+    - hardened
+    - common
+    - backup-client
+    - tomcat
+

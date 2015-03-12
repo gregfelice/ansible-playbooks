@@ -7,7 +7,7 @@
 - group: name={{user}} state=present gid=1000
    
 - user: name={{user}} state=present uid=1000 shell=/bin/bash group={{user}} groups=admin append=yes
-- authorized_key: user={{user}} key="{{ lookup('file', '/home/{{user}}/.ssh/id_rsa.pub') }}"
+- authorized_key: user={{user}} key="{{ lookup('file', '/home/gregf/.ssh/id_rsa.pub') }}"
 
 ### sudoers
 
