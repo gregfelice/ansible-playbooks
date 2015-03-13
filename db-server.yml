@@ -2,9 +2,9 @@
 - hosts: db-servers
 
   roles: 
-    #- bootstrap
-    #- hardened
-    #- common
+    - bootstrap
+    - hardened
+    - common
     - postgres-server
 
 
