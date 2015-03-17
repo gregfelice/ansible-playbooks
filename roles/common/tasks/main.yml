@@ -7,37 +7,13 @@
   with_items:
     - epel-release
     - git
-    - zsh 
     - git-core
     - emacs-nox
     - htop
     - python-pip
-    - wget
 
 - name: custom etc/issue
   template: src=issue.j2 dest=/etc/issue owner=root
-
-### ZSH
-
-- name: Clone oh-my-zsh repo
-  git: repo=https://github.com/robbyrussell/oh-my-zsh.git dest=/home/{{ user }}/.oh-my-zsh
-      
-- name: remove standard zshrc
-  file: path=/home/{{ user }}/.zshrc state=absent
-
-- name: Create conf folder in home directory
-  file: path=/home/{{ user }}/conf/ state=directory owner={{ user }}
-
-- name: deploy .zshrc
-  template: src=zshrc.j2 dest=/home/{{ user }}/conf/zshrc owner={{ user }}
-
-- name: symlink zshrc
-  file: path=/home/{{ user }}/.zshrc src=/home/{{ user }}/conf/zshrc state=link owner={{ user }}
-
-- name: Set zsh as default shell
-  user: name={{ user }} shell=/bin/zsh
-
-### END ZSH
 
 ### NTP
 

@@ -20,4 +20,8 @@ $ ./run
 
 Ansible documentation is here: http://docs.ansible.com/
 
+# Other Notes
+
+## Reference Materials I'll Probably Need Soon
+* [A reasonable python REST library](http://docs.python-requests.org/en/latest/index.html)
 

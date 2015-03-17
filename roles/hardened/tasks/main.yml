@@ -1,19 +1,9 @@
 
-### basic users stuff 
-
 - name: disable that pesky selinux
   selinux: state=disabled
 
-- group: name={{user}} state=present gid=1000
-   
-- user: name={{user}} state=present uid=1000 shell=/bin/bash group={{user}} groups=admin append=yes
-- authorized_key: user={{user}} key="{{ lookup('file', '/home/gregf/.ssh/id_rsa.pub') }}"
-
-### sudoers
-
-- lineinfile: dest=/etc/sudoers state=absent regexp="^%wheel"
-
-### firewalls
+- name: clean up sudoers
+  lineinfile: dest=/etc/sudoers state=absent regexp="^%wheel"
 
 - name: ensure firewalld is started
   service: name=firewalld state=started enabled=yes

@@ -2,7 +2,6 @@
 
 - name: ensure epel yum repo is installed
   yum: name=epel-release state=latest
-# RUN rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
 
 - name: ensure python-psycopg2 is installed
   yum: name=python-psycopg2 state=latest
