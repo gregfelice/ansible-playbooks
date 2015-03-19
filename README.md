@@ -24,7 +24,7 @@ Ansible documentation is here: http://docs.ansible.com/
 * [Ansible vSphere guest module](http://docs.ansible.com/vsphere_guest_module.html)
 
 ### Automate SSL certificates
-* [How do I securely deploy SSL keys with Ansible?](* http://red-badger.com/blog/2014/02/28/deploying-ssl-keys-securely-with-ansible/)
+* [How do I securely deploy SSL keys with Ansible?](http://red-badger.com/blog/2014/02/28/deploying-ssl-keys-securely-with-ansible/)
 
 ### Automate DNS configs
 * For internal DNS, TBD
