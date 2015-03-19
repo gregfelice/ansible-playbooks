@@ -21,25 +21,26 @@ Ansible documentation is here: http://docs.ansible.com/
 ## Some Future Directions
 
 ### Provision from vSphere
-* http://docs.ansible.com/vsphere_guest_module.html
+* [Ansible vSphere guest module](http://docs.ansible.com/vsphere_guest_module.html)
 
 ### Automate SSL certificates
-* http://red-badger.com/blog/2014/02/28/deploying-ssl-keys-securely-with-ansible/
+* [How do I securely deploy SSL keys with Ansible?](* http://red-badger.com/blog/2014/02/28/deploying-ssl-keys-securely-with-ansible/)
 
 ### Automate DNS configs
 * For internal DNS, TBD
 * [For UltraDNS, a reasonable python REST library](http://docs.python-requests.org/en/latest/index.html)
 
 ### Tomcat cluster (2 nodes)
-* TBD
+* [How do I iterate over a list of hosts in a group?](http://docs.ansible.com/faq.html)
 
 ### Automate F5 load balancer configs
-* http://docs.ansible.com/list_of_network_modules.html
+* [A list of Ansible network modules](http://docs.ansible.com/list_of_network_modules.html)
 
 ### Invoke playbooks via web services
 * TBD
 
 ## Flows
 * Provision brand new machine from scratch
-* 
+* TBD
+
 
