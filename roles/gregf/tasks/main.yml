@@ -27,7 +27,7 @@
   git: repo=https://github.com/robbyrussell/oh-my-zsh.git dest=/home/{{ user }}/.oh-my-zsh
 
 - name: install homeshick
-  git: repo=https://github.com/andsens/homeshick.git dest==/home/{{user}}/.homesick/repos/homeshick
+  git: repo=https://github.com/andsens/homeshick.git dest=/home/{{user}}/.homesick/repos/homeshick
 
 #- name: clone home
 #  shell: homeshick clone gregfelice/dotfiles

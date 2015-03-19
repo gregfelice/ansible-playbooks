@@ -1,0 +1,4 @@
+
+- name: ensure tomcat packages are installed
+  yum: name=tomcat state=latest
+

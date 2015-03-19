@@ -5,6 +5,5 @@
     - bootstrap
     - hardened
     - common
-    - backup-client
     - tomcat
-
+    
