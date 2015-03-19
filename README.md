@@ -25,3 +25,12 @@ Ansible documentation is here: http://docs.ansible.com/
 ## Reference Materials I'll Probably Need Soon
 * [A reasonable python REST library](http://docs.python-requests.org/en/latest/index.html)
 
+## Some Future Directions
+* Provision from vSphere
+* Automate SSL certificates
+* Automate DNS configs
+* Tomcat cluster (2 nodes)
+* Automate F5 load balancer configs
+* Invoke playbooks via web services
+
+

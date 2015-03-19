@@ -26,15 +26,12 @@
 - name: Clone oh-my-zsh repo
   git: repo=https://github.com/robbyrussell/oh-my-zsh.git dest=/home/{{ user }}/.oh-my-zsh
 
-- name: install ruby (2x)
-  yum: name=ruby state=latest
+- name: install homeshick
+  git: repo=https://github.com/andsens/homeshick.git dest==/home/{{user}}/.homesick/repos/homeshick
 
-- name: install homesick
-  gem: name=homesick state=latest
+#- name: clone home
+#  shell: homeshick clone gregfelice/dotfiles
 
-- name: clone home
-  shell: /home/{{user}}/bin/homesick clone gregfelice/dotfiles
-
-- name: link home
-  shell: /home/{{user}}/bin/homesick link dotfiles --force
+#- name: link home
+#  shell: homeshick link dotfiles --force
 

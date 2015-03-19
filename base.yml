@@ -2,8 +2,8 @@
 - hosts: base
 
   roles: 
-    #- bootstrap
-    #- hardened
-    #- common
-    #- backup-client
+    - bootstrap
+    - hardened
+    - common
+    - backup-client
     - gregf
