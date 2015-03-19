@@ -31,11 +31,15 @@ Ansible documentation is here: http://docs.ansible.com/
 * [For UltraDNS, a reasonable python REST library](http://docs.python-requests.org/en/latest/index.html)
 
 ### Tomcat cluster (2 nodes)
-
+* TBD
 
 ### Automate F5 load balancer configs
 * http://docs.ansible.com/list_of_network_modules.html
 
 ### Invoke playbooks via web services
 * TBD
+
+## Flows
+* Provision brand new machine from scratch
+* 
 
