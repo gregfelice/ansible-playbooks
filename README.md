@@ -32,6 +32,7 @@ Ansible documentation is here: http://docs.ansible.com/
 
 ### Tomcat cluster (2 nodes)
 * [How do I iterate over a list of hosts in a group?](http://docs.ansible.com/faq.html)
+* [How do I manage machines with group_vars?](https://gist.github.com/anonymous/5e1f88c5acc0dc699093)
 
 ### Automate F5 load balancer configs
 * [A list of Ansible network modules](http://docs.ansible.com/list_of_network_modules.html)
