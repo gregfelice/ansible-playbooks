@@ -2,6 +2,8 @@
 - name: disable that pesky selinux
   selinux: state=disabled
 
+- debug: msg="TEST OF SYSTEM DEBUG {{foo}}"
+
 - name: clean up sudoers
   lineinfile: dest=/etc/sudoers state=absent regexp="^%wheel"
 

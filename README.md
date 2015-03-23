@@ -42,6 +42,6 @@ Ansible documentation is here: http://docs.ansible.com/
 
 ## Flows
 * Provision brand new machine from scratch
-* TBD
+* 
 
 

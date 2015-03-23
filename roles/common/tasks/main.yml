@@ -11,6 +11,8 @@
     - emacs-nox
     - htop
     - python-pip
+  tags:
+    - packages
 
 - name: custom etc/issue
   template: src=issue.j2 dest=/etc/issue owner=root

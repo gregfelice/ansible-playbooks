@@ -10,7 +10,9 @@
     - htop
     - python-pip
     - wget
-
+  tags:
+    - packages
+     
 - name: ensure gregf group is there
   group: name={{user}} state=present gid=1000
    
