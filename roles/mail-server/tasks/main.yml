@@ -1,0 +1,33 @@
+
+# http://www.rackspace.com/knowledge_center/article/dovecot-installation-and-configuration-on-centos
+
+- name: install some packages
+  yum: name={{ item }} state=latest
+  with_items:
+    - postfix
+    - dovecot
+  tags:
+    - packages
+
+- name: config files for postfix
+  template: src=main.cf.j2 dest=/etc/postfix/main.cf owner=root backup=yes
+
+- name: start postfix
+  service: name=postfix state=restarted enabled=true
+
+- name: config files dovecot
+  template: src=dovecot.conf.j2 dest=/etc/dovecot/dovecot.conf owner=root backup=yes
+
+- name: config files 10 master
+  template: src=10-master.conf.j2 dest=/etc/dovecot/conf.d/10-master.conf owner=root backup=yes
+
+- name: config files 10 auth
+  template: src=10-auth.conf.j2 dest=/etc/dovecot/conf.d/10-auth.conf owner=root backup=yes
+
+- name: config files 10 mail
+  template: src=10-mail.conf.j2 dest=/etc/dovecot/conf.d/10-mail.conf owner=root backup=yes
+
+- name: start dovecot
+  service: name=dovecot state=restarted enabled=true
+
+

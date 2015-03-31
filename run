@@ -1,0 +1,12 @@
+
+ansible-playbook -i stage -u ansible --sudo -s site.yml -f 4 --skip-tags "packages"
+
+
+
+
+
+
+
+
+
+
