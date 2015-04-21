@@ -1,7 +1,8 @@
 
-* get dotfiles and homesick working from ansible
-* get bootstrapping working for new machines
+# TODO
+* DONE nginx
+* DONE php-fpm
+* wordpress
+* postgres
 
-* get haproxy layer machines automated
-* get docker containers automated
 

@@ -2,8 +2,6 @@
 - name: disable that pesky selinux
   selinux: state=disabled
 
-- debug: msg="TEST OF SYSTEM DEBUG {{foo}}"
-
 - name: clean up sudoers
   lineinfile: dest=/etc/sudoers state=absent regexp="^%wheel"
 
@@ -17,20 +15,32 @@
 - firewalld: service=https permanent=true state=enabled
 - firewalld: port=8080/tcp permanent=true state=enabled
 - firewalld: port=8090/tcp permanent=true state=enabled
+- firewalld: port=3000/tcp permanent=true state=enabled
 
 - name: reload changes to firewalld
   service: name=firewalld state=restarted
 
+- name: install epel
+  yum: name=epel-release state=latest
+  tags: 
+    - packages
+
 - name: install logwatch
   yum: name=logwatch state=latest
-
+  tags: 
+    - packages
+  
 # http://blog.iopsl.com/fail2ban-on-centos-7-to-protect-ssh/
 - name: install fail2ban
   yum: name=fail2ban state=latest
+  tags: 
+    - packages
 
 - name: install fail2ban systemd
   yum: name=fail2ban-systemd state=latest
-
+  tags: 
+    - packages
+  
 - name: install sshd configs for fail2 ban
   template: src=sshd.local.j2 dest=/etc/fail2ban/jail.d/sshd.local
 

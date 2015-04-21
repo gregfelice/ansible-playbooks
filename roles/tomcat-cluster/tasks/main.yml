@@ -1,0 +1,28 @@
+
+
+# TOMCAT CLUSTER
+# http://wiki.apache.org/tomcat/ClusteringOverview
+#
+# ansible tower..
+# http://www.ansible.com/blog/managing-vmware-vsphere-guests-with-ansible-tower
+
+- name: test a debug call
+  debug: msg="TEST OF SYSTEM DEBUG {{foo}}"
+
+- name: ensure tomcat packages are installed
+  yum: name=tomcat state=latest
+  tags:
+    - packages
+
+- name: ensure tomcat service is enabled and running, and register the result as a variable
+  service: name=tomcat enabled=yes state=restarted
+  register: tomcat_service
+
+- name: dump the tomcat_service variable structure
+  debug: var=tomcat_service
+
+- name: template example
+  connection: local
+  template: src=test.txt.j2 dest=/home/gregf/dev/ansible/test.txt owner=gregf
+
+

@@ -12,6 +12,5 @@
 - name: ensure keys for postgres
   authorized_key: user=postgres key="{{ lookup('file', '/home/gregf/.ssh/id_rsa.pub') }}"
  
-- name: ensure postgres is enabled and running
-  service: name=postgresql enabled=yes state=restarted
-
+- name: ensure postgres is enabled
+  service: name=postgresql enabled=yes

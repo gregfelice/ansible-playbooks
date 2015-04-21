@@ -1,0 +1,17 @@
+
+OUTPUTS
+######################
+
+These are the app-server hosts.
+{% for host in groups['app-servers'] %}
+   {{ host }} ---> {{ hostvars[host]['ansible_eth0']['ipv4']['address'] }}
+{% endfor %}
+
+This is a list of all the group names.
+{% for g in group_names %}
+   {{ g }}
+{% endfor %}
+
+{{ tomcat_service[ 'state' ] }}
+
+#####################

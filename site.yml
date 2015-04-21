@@ -1,5 +1,7 @@
 ---
-- include: base.yml
-- include: mail-server.yml
+# - include: base.yml
+# - include: db-server.yml
+# - include: mail-server.yml
 # - include: backup-server.yml
 
+- include: web-server.yml
