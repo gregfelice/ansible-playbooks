@@ -3,10 +3,10 @@
 
   roles: 
     #- bootstrap
-    #- hardened
-    #- common
-    #- backup-client
-    #- gregf
+    - hardened
+    - common
+    - backup-client
+    - gregf
     - nginx-php
 
 

@@ -1,4 +1,6 @@
 
+
+
 - name: ensure nginx packages are installed
   yum: name=nginx state=latest
 
@@ -17,6 +19,8 @@
 
 - name: ensure php packages are installed
   yum: name=php state=latest
+
+# TODO yum install php-mysqlnd
 
 - name: ensure php.ini is installed
   template: src=php.ini.j2 dest=/etc/php.ini

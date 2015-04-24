@@ -30,4 +30,16 @@
 - name: start dovecot
   service: name=dovecot state=restarted enabled=true
 
+- name: ensure firewall is open
+  firewalld: port=110/tcp permanent=true state=enabled
+
+- firewalld: port=587/tcp permanent=true state=enabled
+- firewalld: port=143/tcp permanent=true state=enabled
+- firewalld: port=993/tcp permanent=true state=enabled
+- firewalld: port=995/tcp permanent=true state=enabled
+- firewalld: port=25/tcp permanent=true state=enabled
+- firewalld: port=465/tcp permanent=true state=enabled
+
+- name: reload changes to firewalld
+  service: name=firewalld state=restarted
 
