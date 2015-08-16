@@ -1,0 +1,24 @@
+#!/usr/bin/python
+
+import ansible.runner
+import ansible.inventory
+import json
+
+hosts = ["aboa.constantlabs.com"]
+
+example_inventory = ansible.inventory.Inventory(hosts)
+
+out = ansible.runner.Runner(
+    module_name='command', 
+    module_args='/usr/bin/free',
+    inventory = example_inventory,
+    subset = 'all'
+).run()
+
+#for key, value in out.items():
+#    print key
+
+print json.dumps(out, sort_keys=True, indent=4, separators=(',', ': '))
+
+
+

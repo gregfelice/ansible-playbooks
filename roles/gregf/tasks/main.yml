@@ -26,14 +26,15 @@
   file: path=/home/{{user}}/bin state=directory owner={{user}} group={{user}} mode=750
 
 - name: Clone oh-my-zsh repo
-  git: repo=https://github.com/robbyrussell/oh-my-zsh.git dest=/home/{{ user }}/.oh-my-zsh
+  git: repo=https://github.com/robbyrussell/oh-my-zsh.git dest=/home/{{ user }}/.oh-my-zsh force=true
+
+
 
 - name: install homeshick
   git: repo=https://github.com/andsens/homeshick.git dest=/home/{{user}}/.homesick/repos/homeshick
 
-#- name: clone home
-#  shell: homeshick clone gregfelice/dotfiles
+- name: change permissions to me
+  file: path=/home/{{user}}/.homesick owner=gregf group=gregf recurse=yes
 
-#- name: link home
-#  shell: homeshick link dotfiles --force
-
+- name: install setup file to clone and link
+  copy: src=homesick_setup dest=/home/{{user}} owner=gregf group=gregf mode=744 backup=no
