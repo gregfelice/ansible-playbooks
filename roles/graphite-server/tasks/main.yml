@@ -1,0 +1,89 @@
+
+# DEPENDENCIES
+# postgres server exists
+# graphite server has access to postgres via hb_conf
+# postgres graphite database and user are created
+
+# TESTING
+# test postgres
+# test django
+# test nginx
+# test nginx -> django
+# test django -> postgres
+# test graphite app within django, from django
+# test graphite app within django, from nginx
+
+# NOTES
+# Configuring nginx, uwsgi, django
+# https://www.digitalocean.com/community/tutorials/how-to-serve-django-applications-with-uwsgi-and-nginx-on-centos-7
+
+- name: python headers for gcc
+  yum: name=python-devel state=latest
+
+- name: ensure several packages are installed for django / graphite
+  yum: name={{ item }} state=latest
+  with_items:
+    - postgresql
+    - postgresql-libs
+    - python-psycopg2
+    - python-django
+    - python-django-tagging
+    - pycairo
+    - python-twisted-core
+    - pytz
+    - fontconfig
+  #tags:
+  #  - packages
+
+- name: ensure nginx / uwsgi stuff
+  yum: name={{ item }} state=latest
+  with_items:
+    - nginx
+    - uwsgi
+    - uwsgi-plugin-python
+  #tags:
+  #  - packages
+
+- name: django static file management
+  pip: name=whitenoise
+
+- name: install graphite packages via pip
+  shell: pip install https://github.com/graphite-project/ceres/tarball/master
+
+- pip: name=whisper
+- pip: name=carbon
+- pip: name=graphite-web
+
+
+- name: install nginx virt config
+  template: src=graphite.constantlabs.com.conf.j2 dest=/etc/nginx/conf.d/graphite.constantlabs.com.conf
+
+- name: install carbon conf
+  template: src=carbon.conf.j2 dest=/opt/graphite/conf/carbon.conf
+    
+- name: install storage schema conf
+  template: src=storage-schemas.conf.j2 dest=/opt/graphite/conf/storage-schemas.conf
+
+- name: install webapp conf
+  template: src=local_settings.py.j2 dest=/opt/graphite/webapp/graphite/local_settings.py
+
+- name: install storage aggregation conf
+  template: src=storage-aggregation.conf.j2 dest=/opt/graphite/conf/storage-aggregation.conf
+
+- name: install uwsgi conf
+  template: src=graphite.wsgi.j2 dest=/opt/graphite/conf/graphite.wsgi
+
+- name: install uwsgi ini
+  template: src=graphite.ini.j2 dest=/etc/uwsgi.d/graphite.ini
+
+
+- name: create the db schema inside postgres
+  command: /usr/bin/python /opt/graphite/webapp/graphite/manage.py syncdb
+
+- name: start (or restart) nginx
+  service: name=nginx state=restarted
+
+
+
+
+

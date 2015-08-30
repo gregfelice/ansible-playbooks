@@ -1,0 +1,10 @@
+
+# MANAGED BY ANSIBLE
+
+[uwsgi]
+processes = 2
+socket = 127.0.0.1:3031
+gid = uwsgi
+uid = uwsgi
+chdir = /opt/graphite/conf
+module = wsgi:application

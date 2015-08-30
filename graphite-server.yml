@@ -1,0 +1,9 @@
+---
+- hosts: graphite-servers
+
+  roles: 
+    - graphite-server
+
+
+
+

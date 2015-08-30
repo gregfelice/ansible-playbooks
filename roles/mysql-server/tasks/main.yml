@@ -1,0 +1,6 @@
+
+- name: ensure mysql is installed
+  yum: name=mariadb-server state=latest
+
+#- name: ensure mysql is running
+#  service: 

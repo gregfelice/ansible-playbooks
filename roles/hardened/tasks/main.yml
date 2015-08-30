@@ -16,6 +16,7 @@
 - firewalld: port=8080/tcp permanent=true state=enabled
 - firewalld: port=8090/tcp permanent=true state=enabled
 - firewalld: port=3000/tcp permanent=true state=enabled
+- firewalld: port=5432/tcp permanent=true state=enabled
 
 - name: reload changes to firewalld
   service: name=firewalld state=restarted
