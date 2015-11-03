@@ -14,3 +14,6 @@
  
 - name: ensure postgres is enabled
   service: name=postgresql enabled=yes
+
+- name: ensure postgres tcl tools are installed
+  yum: name=postgresql-pltcl state=latest

@@ -29,6 +29,8 @@
 - name: Clone oh-my-zsh repo
   git: repo=https://github.com/robbyrussell/oh-my-zsh.git dest=/home/{{ user }}/.oh-my-zsh force=true
 
+- name: ensure Maildir is in place for mutt mail client
+  file: path=/home/{{user}}/Maildir state=directory mode=0775
 
 - name: install homeshick
   git: repo=https://github.com/andsens/homeshick.git dest=/home/{{user}}/.homesick/repos/homeshick

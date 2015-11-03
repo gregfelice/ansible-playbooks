@@ -1,0 +1,14 @@
+
+#
+# we want to set up a client properly with mail... um,....
+#
+#
+#
+
+- name: ensure mutt, et. al. are installed
+  yum: name={{ item }} state=latest update_cache=true
+  with_items:
+    - mutt
+  tags:
+    - packages
+

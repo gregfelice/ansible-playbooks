@@ -1,0 +1,12 @@
+
+# install statsd
+# Install node.js
+# Clone the project
+# Create a config file from exampleConfig.js and put it somewhere
+# Start the Daemon: node stats.js /path/to/config
+
+- name: ensure statsd is installed
+  yum: name=statsd state=latest
+
+- name: netcat install
+  yum: name=nmap-ncat state=latest
