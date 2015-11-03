@@ -10,16 +10,20 @@
 
 - name: configure firewall services / ports
   firewalld: service=ssh permanent=true state=enabled
+  register: sshd_ports
 
-- firewalld: service=http permanent=true state=enabled
-- firewalld: service=https permanent=true state=enabled
-- firewalld: port=8080/tcp permanent=true state=enabled
-- firewalld: port=8090/tcp permanent=true state=enabled
-- firewalld: port=3000/tcp permanent=true state=enabled
-- firewalld: port=5432/tcp permanent=true state=enabled
+- name: reload changes to firewalld for sshd
+  service: name=firewalld state=restarted
+  when: sshd_ports.changed
+
+- name: ensure host-specific ports are opened
+  firewalld: port="{{ item }}/tcp" permanent=true state=enabled
+  with_items: "{{ hostvars[inventory_hostname]['extra_ports'] | default([]) }}"
+  register: extra_ports
 
 - name: reload changes to firewalld
   service: name=firewalld state=restarted
+  when: extra_ports.changed
 
 - name: install epel
   yum: name=epel-release state=latest
