@@ -18,12 +18,21 @@
 
 - name: ensure host-specific ports are opened
   firewalld: port="{{ item }}/tcp" permanent=true state=enabled
-  with_items: "{{ hostvars[inventory_hostname]['extra_ports'] | default([]) }}"
-  register: extra_ports
+  with_items: "{{ hostvars[inventory_hostname]['allowed_extra_ports'] | default([]) }}"
+  register: allowed_extra_ports
 
-- name: reload changes to firewalld
+- name: reload changes to firewalld if any
   service: name=firewalld state=restarted
-  when: extra_ports.changed
+  when: allowed_extra_ports.changed
+
+- name: ensure host-specific ports are closed
+  firewalld: port="{{ item }}/tcp" permanent=true state=disabled
+  with_items: "{{ hostvars[inventory_hostname]['disallowed_extra_ports'] | default([]) }}"
+  register: disallowed_extra_ports
+
+- name: reload changes to firewalld if any
+  service: name=firewalld state=restarted
+  when: disallowed_extra_ports.changed
 
 - name: install epel
   yum: name=epel-release state=latest
