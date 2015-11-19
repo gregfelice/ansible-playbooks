@@ -1,0 +1,23 @@
+
+- name: ensure monit client is installed
+  yum: name=monit state=latest
+
+- name: ensure monit is running
+  service: name=monit state=started enabled=yes
+
+- name: ensure monitrc is in place
+  template: src=monitrc.j2 dest=/etc/monitrc
+  notify:
+    - restart monit
+
+- name: ensure monitr base file is in place
+  template: src=base.j2 dest=/etc/monit.d/base
+  notify:
+    - restart monit
+
+- name: ensure host-specific ports are opened
+  firewalld: port="2812/tcp" permanent=true state=enabled
+  notify:
+    - restart firewalld
+
+

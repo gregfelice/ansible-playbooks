@@ -1,0 +1,43 @@
+
+#
+# this version of grafana relies on influxdb. 
+#
+
+
+- name: install grafana
+  command: yum install -y https://grafanarel.s3.amazonaws.com/builds/grafana-2.5.0-1.x86_64.rpm
+  ignore_errors: true
+
+- name: ensure its running
+  service: name=grafana-server state=started enabled=yes
+
+
+#wget http://influxdb.s3.amazonaws.com/influxdb-0.9.4.2-1.x86_64.rpm
+#sudo yum localinstall influxdb-0.9.4.2-1.x86_64.rpm
+
+- name: install influxdb
+  command: yum install -y http://influxdb.s3.amazonaws.com/influxdb-0.9.4.2-1.x86_64.rpm
+  ignore_errors: true
+
+- name: ensure its running
+  service: name=influxdb state=started enabled=yes
+
+#sudo apt-get install nodejs
+#cd /opt
+#sudo git clone https://github.com/etsy/statsd.git
+#cd statsd
+#apt-get install npm
+#npm install statsd-influxdb-backend -d
+
+- name: install npm
+  yum: name=npm state=latest
+
+- name: install statsd / influx backend
+  npm: name=statsd-influxdb-backend state=latest global=yes
+
+- name: install statsd python lib
+  pip: name=statsd
+
+
+
+

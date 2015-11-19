@@ -1,4 +1,6 @@
 
+# based on http://graphite.readthedocs.org/en/0.9.13-pre1/install-pip.html
+
 # DEPENDENCIES
 # postgres server exists
 # graphite server has access to postgres via hb_conf
@@ -16,6 +18,8 @@
 # NOTES
 # Configuring nginx, uwsgi, django
 # https://www.digitalocean.com/community/tutorials/how-to-serve-django-applications-with-uwsgi-and-nginx-on-centos-7
+
+# @todo really need to install python 2.7.10 here. and fix the symlinks.
 
 - name: python headers for gcc
   yum: name=python-devel state=latest
@@ -54,7 +58,6 @@
 - pip: name=carbon
 - pip: name=graphite-web
 
-
 - name: install nginx virt config
   template: src=graphite.constantlabs.com.conf.j2 dest=/etc/nginx/conf.d/graphite.constantlabs.com.conf
 
@@ -75,7 +78,6 @@
 
 - name: install uwsgi ini
   template: src=graphite.ini.j2 dest=/etc/uwsgi.d/graphite.ini
-
 
 - name: create the db schema inside postgres
   command: /usr/bin/python /opt/graphite/webapp/graphite/manage.py syncdb
