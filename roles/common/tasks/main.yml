@@ -10,11 +10,14 @@
   yum: name={{ item }} state=latest update_cache=true
   with_items:
     - epel-release
+    - wget
+    - zsh
     - git
     - git-core
     - emacs-nox
     - htop
     - python-pip
+    - net-tools
   tags:
     - packages
 

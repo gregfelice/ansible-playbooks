@@ -1,0 +1,54 @@
+
+# set up an nfs server
+
+- name: ensure nfs packages are installed
+  yum: name={{ item }} state=latest update_cache=true
+  with_items:
+    - nfs-utils
+
+- name: ensure share dir exists
+  file: path=/var/nfsshare state=directory owner=root group=root mode=777
+
+- name: ensure nfs is started
+  service: name="{{ item }}" state=started enabled=yes
+  with_items: 
+    - rpcbind
+    - nfs-server
+    - nfs-lock
+    - nfs-idmap
+
+- name: configure /etc/exports
+  lineinfile: dest=/etc/exports regexp="^\/var\/nfsshare" line="/var/nfsshare {{ nfs_server_ip }} (rw,sync,no_root_squash,no_all_squash)"
+
+- name: restart nfs-server
+  service: name=nfs-server state=restarted enabled=yes
+
+- name: ensure tcp nfs server ports are open
+  firewalld: port="{{ item }}/tcp" permanent=true state=enabled
+  with_items: 
+    - 2049
+    - 111
+  register:
+    nfsports
+  tags:
+    - firewall
+
+- name: ensure udp nfs server ports are open
+  firewalld: port="{{ item }}/udp" permanent=true state=enabled
+  with_items: 
+    - 2049
+    - 111
+  register:
+    nfsports
+  tags:
+    - firewall
+
+- name: reload changes to firewalld if any
+  service: name=firewalld state=restarted
+  when: nfsports.changed
+  tags:
+    - firewall
+
+
+
+

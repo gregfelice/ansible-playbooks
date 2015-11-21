@@ -2,14 +2,13 @@
 - hosts: base
 
   roles: 
-    - bootstrap
+    #- bootstrap
     - hardened
-    - common
-    - backup-client
-    - mail-client
-    - statsd
-    - gregf
-
+    #- common
+    - nfs-client
+    #- backup-client
+    #- mail-client
+    #- statsd
+    #- monit-client
+    #- gregf
     
-
-

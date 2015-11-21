@@ -1,7 +1,11 @@
 
-ansible-playbook -f 5 -i stage -u ansible --sudo -s site.yml
+ansible-playbook -f 10 -i stage -u ansible --sudo -s site.yml --tags 'firewall'
+# --skip-tags 'packages'
 
-# --skip-tags "packages"
+
+
+
+
 
 
 

@@ -13,6 +13,9 @@
 #    - wget
 #  tags:
 #    - packages
+
+- name: ensure zsh is installed
+  yum: name=zsh state=latest
      
 - name: ensure gregf group is there
   group: name={{user}} state=present gid=1000
@@ -31,6 +34,10 @@
 
 - name: ensure Maildir is in place for mutt mail client
   file: path=/home/{{user}}/Maildir state=directory mode=0775
+
+- file: path=/home/{{user}}/Maildir/new state=directory mode=0775
+- file: path=/home/{{user}}/Maildir/cur state=directory mode=0775
+- file: path=/home/{{user}}/Maildir/tmp state=directory mode=0775
 
 - name: install homeshick
   git: repo=https://github.com/andsens/homeshick.git dest=/home/{{user}}/.homesick/repos/homeshick

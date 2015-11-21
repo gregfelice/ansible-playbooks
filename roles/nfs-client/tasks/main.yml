@@ -1,0 +1,53 @@
+
+# set up an nfs server
+
+- name: ensure nfs packages are installed
+  yum: name={{ item }} state=latest update_cache=true
+  with_items:
+    - nfs-utils
+
+- name: ensure share dir exists
+  file: path=/mnt/nfs/var/nfsshare state=directory owner=root group=root mode=777
+
+- name: ensure nfs is started
+  service: name="{{ item }}" state=started enabled=yes
+  with_items: 
+    - rpcbind
+    - nfs-server
+    - nfs-lock
+    - nfs-idmap
+    - rpcbind
+    - nfs-server
+    - nfs-lock
+    - nfs-idmap
+    
+- name: restart nfs-server
+  service: name=nfs-server state=restarted enabled=yes
+
+- name: ensure tcp nfs server ports are open
+  firewalld: port="{{ item }}/tcp" permanent=true state=enabled
+  with_items: 
+    - 2049
+    - 111
+  register:
+    nfsports
+  tags:
+    - firewall
+
+- name: ensure udp nfs server ports are open
+  firewalld: port="{{ item }}/udp" permanent=true state=enabled
+  with_items: 
+    - 2049
+    - 111
+  register:
+    nfsports
+  tags:
+    - firewall
+
+- name: reload changes to firewalld if any
+  service: name=firewalld state=restarted
+  when: nfsports.changed
+  tags:
+    - firewall
+
+- command: /usr/bin/mount -t nfs 71.19.153.130:/var/nfsshare /mnt/nfs/var/nfsshare/
