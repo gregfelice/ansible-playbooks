@@ -1,4 +1,3 @@
-
 # set up an nfs server
 
 - name: ensure nfs packages are installed
@@ -50,4 +49,8 @@
   tags:
     - firewall
 
-- command: /usr/bin/mount -t nfs 71.19.153.130:/var/nfsshare /mnt/nfs/var/nfsshare/
+- name: mount nfs drive
+  mount: name=/mnt/nfs/var/nfsshare fstype=nfs src=71.19.153.130:/var/nfsshare state=mounted
+
+
+
