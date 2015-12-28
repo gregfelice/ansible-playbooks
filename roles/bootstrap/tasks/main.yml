@@ -14,8 +14,11 @@
 - name: ensure ansible not in sudoers directly
   lineinfile: dest=/etc/sudoers state=absent regexp="ansible"
 
+- name: ensure capital ADMIN group not present
+  lineinfile: dest=/etc/sudoers state=absent regexp="ADMIN"
+
 - name: ensure admin group in sudoers, so ansible has rights to do cool things
-  lineinfile: dest=/etc/sudoers state=present regexp='^%ADMIN ALL\=' line='%ADMIN ALL=(ALL) NOPASSWD:ALL' validate='visudo -cf %s'
+  lineinfile: dest=/etc/sudoers state=present regexp='^%admin ALL\=' line='%admin ALL=(ALL) NOPASSWD:ALL' validate='visudo -cf %s'
 
 - name: harden sshd configuration file
   template: src=sshd_config.j2 dest=/etc/ssh/sshd_config backup=yes owner=0 group=0 mode=0644 validate='/usr/sbin/sshd -T -f %s'
