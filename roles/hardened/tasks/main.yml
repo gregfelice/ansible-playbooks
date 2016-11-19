@@ -14,40 +14,27 @@
     - firewall
 
 - name: configure firewall services / ports
-  firewalld: service=ssh permanent=true state=enabled
-  register: sshd_ports
-  tags:
-    - firewall
-
-- name: reload changes to firewalld for sshd
-  service: name=firewalld state=restarted
-  when: sshd_ports.changed
+  firewalld: service=ssh permanent=true state=enabled immediate=true
   tags:
     - firewall
 
 - name: ensure host-specific ports are opened
-  firewalld: port="{{ item }}/tcp" permanent=true state=enabled
+  firewalld: port="{{ item }}/tcp" permanent=true state=enabled immediate=true
   with_items: "{{ hostvars[inventory_hostname]['allowed_extra_ports'] | default([]) }}"
-  register: allowed_extra_ports
-  tags:
-    - firewall
-
-- name: reload changes to firewalld if any
-  service: name=firewalld state=restarted
-  when: allowed_extra_ports.changed
-  tags:
+  tags: 
     - firewall
 
 - name: ensure host-specific ports are closed
-  firewalld: port="{{ item }}/tcp" permanent=true state=disabled
+  firewalld: port="{{ item }}/tcp" permanent=true state=disabled immediate=true
   with_items: "{{ hostvars[inventory_hostname]['disallowed_extra_ports'] | default([]) }}"
   register: disallowed_extra_ports
   tags:
     - firewall
 
-- name: reload changes to firewalld if any
-  service: name=firewalld state=restarted
-  when: disallowed_extra_ports.changed
+- name: ensure host-specific ports are closed
+  firewalld: port="{{ item }}/udp" permanent=true state=disabled immediate=true
+  with_items: "{{ hostvars[inventory_hostname]['disallowed_extra_ports'] | default([]) }}"
+  register: disallowed_extra_udp_ports
   tags:
     - firewall
 

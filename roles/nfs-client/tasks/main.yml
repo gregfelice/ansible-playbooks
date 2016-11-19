@@ -23,25 +23,27 @@
 - name: restart nfs-server
   service: name=nfs-server state=restarted enabled=yes
 
-- name: ensure tcp nfs server ports are open
-  firewalld: port="{{ item }}/tcp" permanent=true state=enabled
-  with_items: 
-    - 2049
-    - 111
-  register:
-    nfsports
-  tags:
-    - firewall
+#
+#- name: ensure tcp nfs server ports are open
+#  firewalld: port="{{ item }}/tcp" permanent=true state=enabled
+#  with_items: 
+#    - 2049
+#    - 111
+#  register:
+#    nfsports
+#  tags:
+#    - firewall
 
-- name: ensure udp nfs server ports are open
-  firewalld: port="{{ item }}/udp" permanent=true state=enabled
-  with_items: 
-    - 2049
-    - 111
-  register:
-    nfsports
-  tags:
-    - firewall
+#- name: ensure udp nfs server ports are open
+#  firewalld: port="{{ item }}/udp" permanent=true state=enabled
+#  with_items: 
+#    - 2049
+#    - 111
+#  register:
+#    nfsports
+#  tags:
+#    - firewall
+#
 
 - name: reload changes to firewalld if any
   service: name=firewalld state=restarted

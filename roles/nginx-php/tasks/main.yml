@@ -1,6 +1,4 @@
 
-
-
 - name: ensure nginx packages are installed
   yum: name=nginx state=latest
 
@@ -17,26 +15,66 @@
   notify:
     - restart nginx
 
-- name: ensure php packages are installed
-  yum: name=php state=latest
+- name: ensure several packages are removed
+  yum: name={{ item }} state=removed
+  with_items: 
+    - php-mysql
+    - php-ldap
+    - php-pear
+    - php-pdo
+    - php-fpm
+    - php-mbstring
+    - php-gd
+    - php-common
+    - php
+    - php-process
+    - php-bcmath
+    - php-cli
+    - php-xml
+
+- name: ensure several packages are installed
+  yum: name={{ item }} state=latest update_cache=true
+  with_items:
+    - php56u
+    - php56u-mysql
+    - php56u-ldap
+    - php56u-pear
+    - php56u-pdo
+    - php56u-fpm
+    - php56u-mbstring
+    - php56u-gd
+    - php56u-common
+    - php56u-process
+    - php56u-bcmath
+    - php56u-cli
+    - php56u-xml
+  notify: 
+    - restart nginx
+  tags:
+    - packages
 
 # TODO yum install php-mysqlnd
 
-- name: ensure php.ini is installed
-  template: src=php.ini.j2 dest=/etc/php.ini
+#- name: ensure php.ini is installed
+#  template: src=php.ini.j2 dest=/etc/php.ini
 
-- name: ensure php-fpm packages are installed
-  yum: name=php-fpm state=latest
+#- name: ensure php-fpm packages are installed
+#  yum: name=php-fpm state=latest
 
-- name: ensure php-fpm.d/www.conf installed
-  template: src=www.conf.j2 dest=/etc/php-fpm.d/www.conf
-  notify: 
-    - restart php-fpm
+#- name: ensure php-fpm.d/www.conf installed
+#  template: src=www.conf.j2 dest=/etc/php-fpm.d/www.conf
+#  notify: 
+#    - restart php-fpm
 
 - name: ensure php-fpm service is enabled and running
   service: name=php-fpm enabled=yes state=started
 
-- name: copy info.php over into htdocs for testing
-  copy: src=info.php dest=/usr/share/nginx/html owner=root group=root
+#- name: copy info.php over into htdocs for testing
+#  copy: src=info.php dest=/usr/share/nginx/html owner=root group=root
+
+# todo -- Need to figure out permissions here for php-fpm - starts as root:php-fpm, but i have things running as web:web. 
+# required chown -R web:web on /var/lib/php-fpm to get running
+
+
 
 

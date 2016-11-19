@@ -1,9 +1,0 @@
----
-- hosts: monitoring-servers
-
-  roles: 
-    - statsd
-    - grafana-server
-    
-
-

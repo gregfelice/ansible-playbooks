@@ -3,6 +3,8 @@
 
 # goal: ensure the ansible user is installed correctly, and from here we no longer need to do work as root.
 
+#- hostname: name={{hostname}}
+
 - group: name=admin state=present gid=7777
 
 - name: add ansible user

@@ -10,7 +10,7 @@
   file: path=/var/nfsshare state=directory owner=root group=root mode=777
 
 - name: ensure nfs is started
-  service: name="{{ item }}" state=started enabled=yes
+  service: name="{{ item }}" state=stopped enabled=yes
   with_items: 
     - rpcbind
     - nfs-server
@@ -20,11 +20,12 @@
 - name: configure /etc/exports
   lineinfile: dest=/etc/exports regexp="^\/var\/nfsshare" line="/var/nfsshare {{ nfs_server_ip }} (rw,sync,no_root_squash,no_all_squash)"
 
+# changed
 - name: restart nfs-server
-  service: name=nfs-server state=restarted enabled=yes
+  service: name=nfs-server state=stopped enabled=yes
 
 - name: ensure tcp nfs server ports are open
-  firewalld: port="{{ item }}/tcp" permanent=true state=enabled
+  firewalld: port="{{ item }}/tcp" permanent=true state=disabled
   with_items: 
     - 2049
     - 111
@@ -34,7 +35,7 @@
     - firewall
 
 - name: ensure udp nfs server ports are open
-  firewalld: port="{{ item }}/udp" permanent=true state=enabled
+  firewalld: port="{{ item }}/udp" permanent=true state=disabled
   with_items: 
     - 2049
     - 111

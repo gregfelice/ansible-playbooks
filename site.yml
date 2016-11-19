@@ -1,8 +1,0 @@
----
-- include: base.yml
-- include: nfs-server.yml
-# - include: db-server.yml
-# - include: monitoring-server.yml
-# - include: backup-server.yml
-# - include: mail-server.yml
-# - include: web-server.yml

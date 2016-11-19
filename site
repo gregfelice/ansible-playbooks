@@ -1,5 +1,11 @@
+#!/usr/bin/bash
 
-ansible-playbook -f 10 -i stage -u ansible --sudo -s site.yml --tags 'firewall'
+DEBUG=true
+PACKAGES=true
+
+ansible-playbook -f 10 -i stage -u ansible --sudo -s playbooks/site.yml
+
+# --tags 'firewall'
 # --skip-tags 'packages'
 
 

@@ -1,19 +1,4 @@
 
-# removed - this duplicates common role
-#- name: ensure several packages are installed
-#  yum: name={{ item }} state=latest update_cache=true
-#  with_items:
-#    - epel-release
-#    - git
-#    - zsh 
-#    - git-core
-#    - emacs-nox
-#    - htop
-#    - python-pip
-#    - wget
-#  tags:
-#    - packages
-
 - name: ensure zsh is installed
   yum: name=zsh state=latest
      
@@ -29,8 +14,8 @@
 - name: ensure home bin exists
   file: path=/home/{{user}}/bin state=directory owner={{user}} group={{user}} mode=750
 
-- name: Clone oh-my-zsh repo
-  git: repo=https://github.com/robbyrussell/oh-my-zsh.git dest=/home/{{ user }}/.oh-my-zsh force=true
+#- name: Clone oh-my-zsh repo
+#  git: repo=https://github.com/robbyrussell/oh-my-zsh.git dest=/home/{{ user }}/.oh-my-zsh force=yes
 
 - name: ensure Maildir is in place for mutt mail client
   file: path=/home/{{user}}/Maildir state=directory mode=0775
@@ -39,8 +24,8 @@
 - file: path=/home/{{user}}/Maildir/cur state=directory mode=0775
 - file: path=/home/{{user}}/Maildir/tmp state=directory mode=0775
 
-- name: install homeshick
-  git: repo=https://github.com/andsens/homeshick.git dest=/home/{{user}}/.homesick/repos/homeshick
+#- name: install homeshick
+#  git: repo=https://github.com/andsens/homeshick.git dest=/home/{{user}}/.homesick/repos/homeshick
 
 - name: change permissions to me
   file: path=/home/{{user}}/.homesick owner=gregf group=gregf recurse=yes

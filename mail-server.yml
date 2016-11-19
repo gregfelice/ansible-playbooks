@@ -1,7 +1,0 @@
----
-- hosts: mail-servers
-
-  roles: 
-    - mail-server
-
-
