@@ -1,0 +1,39 @@
+
+# 
+# for consul service file, see https://gist.github.com/yunano/c27eb679a29ab70178ca
+# 
+
+- sysctl: name="net.ipv4.ip_forward" value=1 sysctl_set=yes state=present reload=yes
+
+- copy: src=docker.repo dest=/etc/yum.repos.d/docker.repo owner=root group=root mode=644
+
+- name: ensure docker packages
+  yum: name=docker-engine state=latest
+  tags: 
+    - packages
+
+- name: be sure ntpd is running and enabled
+  service: name=docker state=running enabled=yes
+
+- name: install docker machine
+  script: install_docker_machine.sh
+
+- name: ensure ansible related packages installed
+  pip: name=docker-py
+
+- name: install unzip
+  yum: name=unzip state=latest
+  tags: 
+    - packages
+
+- name: get install consul
+  get_url: url=https://releases.hashicorp.com/consul/0.6.4/consul_0.6.4_linux_amd64.zip dest=/tmp
+
+- name: install consul
+  unarchive: src=/tmp/consul_0.6.4_linux_amd64.zip dest=/usr/local/bin remote_src=yes
+
+
+
+
+
+  

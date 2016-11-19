@@ -1,0 +1,16 @@
+
+# create a django box
+
+# right python?
+
+# pip?
+
+# libraries?
+
+# postgres stuff?
+
+# django?
+
+# test? execute the line, test the result
+
+python -m django --version

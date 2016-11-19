@@ -1,0 +1,10 @@
+---
+- include: base.yml
+#- include: docker-host.yml
+#- include: dr-ericawaters-site.yml
+#- include: nfs-server.yml
+#- include: mail-server.yml
+# - include: db-server.yml
+# - include: monitoring-server.yml
+# - include: backup-server.yml
+#- include: web-server.yml

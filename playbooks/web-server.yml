@@ -1,0 +1,13 @@
+---
+- hosts: web-servers
+
+  roles: 
+    #- bootstrap
+    #- hardened
+    #- common
+    #- backup-client
+    #- gregf
+    - nginx-php
+
+
+

@@ -1,0 +1,15 @@
+
+# create dr-ericawaters specifics. 
+#
+
+# db container
+- name: create db container and connect to network
+  docker_container:
+    name: db_dr_ericwaters
+    image: "mysql:latest"
+    state: started
+
+# web / app container
+
+
+
