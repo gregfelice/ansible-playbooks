@@ -8,4 +8,6 @@ tramp
 .\#*
 stage
 production
-
+consul_0.6.4_SHA256SUMS.sig
+new.retry
+site.retry
